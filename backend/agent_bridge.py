@@ -193,8 +193,6 @@ def handle_arduino_event(event):
         "timestamp": datetime.now().isoformat()
     }
 
-    # Step 4: Send to websocket_manager to push to frontends
-    if on_recommendation_ready:
-        on_recommendation_ready(result)
-
+# Step 4: Return result — main.py handles broadcasting
+    # on_recommendation_ready is called by main.py's run_agent
     return result
