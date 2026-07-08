@@ -2,18 +2,17 @@
 # Entry point for SUTRA backend
 # Starts FastAPI server, connects all modules together
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Depends
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import asyncio
-import json
 from datetime import datetime
 
 # Import all our modules
 from config import HOST, PORT
-from database import create_tables, seed_demo_data, get_db, \
-    SessionLocal, Inventory, ProcurementOrder
+from database import create_tables, seed_demo_data, SessionLocal, Inventory, ProcurementOrder
 from serial_listener import start_listening
+from cloud_sync import start_cloud_sync, queue_transaction
 from websocket_manager import (
     manager,
     broadcast_recommendation,
@@ -91,6 +90,9 @@ async def lifespan(app: FastAPI):
 
     start_listening(handle_event)
 
+    # Step 5: Start cloud sync service
+    start_cloud_sync()
+
     print("\n[MAIN] SUTRA Backend is ready!")
     print(f"[MAIN] Dashboard: http://localhost:{PORT}")
     print(f"[MAIN] API Docs:  http://localhost:{PORT}/docs")
@@ -100,6 +102,7 @@ async def lifespan(app: FastAPI):
 
     # SHUTDOWN
     print("\n[MAIN] SUTRA Backend shutting down...")
+
 
 # ─── CREATE FASTAPI APP ───────────────────────────────────────
 
@@ -133,7 +136,10 @@ def root():
 
 @app.get("/health")
 def health_check():
-    return {"status": "healthy", "timestamp": datetime.now().isoformat()}
+    return {
+        "status": "healthy",
+        "timestamp": datetime.now().isoformat()
+    }
 
 
 # ─── INVENTORY ENDPOINTS ──────────────────────────────────────
@@ -208,6 +214,9 @@ async def approve_procurement(data: dict):
 
     result = await procurement_engine.execute_procurement(data)
 
+    # Queue transaction for Cloud 100 sync
+    queue_transaction(result)
+
     return {
         "status": "approved",
         "po_number": result["po_number"],
@@ -222,7 +231,10 @@ def reject_procurement(data: dict):
         data["po_number"],
         data.get("reason", "Owner rejected")
     )
-    return {"status": "rejected", "po_number": data["po_number"]}
+    return {
+        "status": "rejected",
+        "po_number": data["po_number"]
+    }
 
 
 @app.get("/procurement/orders")
@@ -286,7 +298,10 @@ async def supplier_confirm(data: dict):
     finally:
         db.close()
 
-    return {"status": "confirmed", "po_number": data["po_number"]}
+    return {
+        "status": "confirmed",
+        "po_number": data["po_number"]
+    }
 
 
 @app.post("/supplier/reject")
@@ -295,7 +310,10 @@ def supplier_reject(data: dict):
     procurement_engine.update_order_status(
         data["po_number"], "supplier_rejected"
     )
-    return {"status": "supplier_rejected", "po_number": data["po_number"]}
+    return {
+        "status": "supplier_rejected",
+        "po_number": data["po_number"]
+    }
 
 
 # ─── ANALYTICS ENDPOINTS ──────────────────────────────────────
@@ -306,6 +324,13 @@ def get_analytics():
     return procurement_engine.get_analytics_summary()
 
 
+@app.get("/analytics/insights")
+def get_cloud_insights():
+    """Returns latest insights from Cloud 100."""
+    from cloud_sync import get_insights
+    return get_insights()
+
+
 # ─── WEBSOCKET ENDPOINTS ──────────────────────────────────────
 
 @app.websocket("/ws/dashboard")
@@ -314,7 +339,6 @@ async def websocket_dashboard(websocket: WebSocket):
     await manager.connect_dashboard(websocket)
     try:
         while True:
-            # Keep connection alive
             await websocket.receive_text()
     except WebSocketDisconnect:
         manager.disconnect_dashboard(websocket)

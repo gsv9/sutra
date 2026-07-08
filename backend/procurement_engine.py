@@ -50,7 +50,6 @@ def update_inventory_forecast(item_name: str, quantity_ordered: float):
         ).first()
 
         if inventory:
-            # Add expected stock to current weight
             inventory.current_weight += quantity_ordered
             inventory.last_updated = datetime.now()
             db.commit()
@@ -190,6 +189,11 @@ async def execute_procurement(recommendation: dict):
             "expected_delivery": delivery_date,
             "timestamp": datetime.now().isoformat()
         })
+
+    # Step 8: Queue for Cloud 100 sync
+    from cloud_sync import queue_transaction
+    queue_transaction(order_data)
+    print(f"[ENGINE] Transaction queued for Cloud 100 sync")
 
     print(f"[ENGINE] Procurement complete: {po_number}")
     return order_data
