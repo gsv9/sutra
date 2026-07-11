@@ -1,40 +1,67 @@
 import { useState, useEffect } from 'react';
 
 export function useSutraSocket() {
+  const [isConnected, setIsConnected] = useState(false);
   const [inventory, setInventory] = useState([]);
   const [recommendation, setRecommendation] = useState(null);
   const [confirmedOrders, setConfirmedOrders] = useState([]);
-  const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:8000/ws/dashboard');
+    let ws;
+    let reconnectTimeout;
 
-    ws.onopen = () => setIsConnected(true);
-    ws.onclose = () => setIsConnected(false);
+    const connect = () => {
+      ws = new WebSocket('ws://localhost:8000/ws/dashboard');
+      
+      ws.onopen = () => setIsConnected(true);
+      
+      ws.onclose = () => {
+        setIsConnected(false);
+        reconnectTimeout = setTimeout(connect, 3000); 
+      };
 
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
+      ws.onerror = (err) => {
+        console.error("WebSocket Error:", err);
+      };
 
-      switch (data.type) {
-        case 'inventory_update':
-          setInventory(data.inventory);
-          break;
-        case 'new_recommendation':
-          setRecommendation(data);
-          break;
-        case 'procurement_executed':
-          setRecommendation(null);
-          break;
-        case 'order_confirmed':
-          setConfirmedOrders((prev) => [data, ...prev]);
-          setRecommendation(null);
-          break;
-        default:
-          console.warn('Unknown message type:', data.type);
-      }
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          
+          if (data.type === 'inventory_update') {
+            setInventory(data.inventory);
+          }
+          if (data.type === 'new_recommendation') {
+            setRecommendation(data);
+          }
+          if (data.type === 'clear_recommendation') {
+            setRecommendation(null);
+          }
+          if (data.type === 'order_confirmed') {
+            const orderPayload = data.order || data;
+            if (orderPayload) {
+              setConfirmedOrders((prev) => {
+                // Strict deduplication lock. Discards duplicate PO broadcasts.
+                if (prev.some(order => order.po_number === orderPayload.po_number)) {
+                  return prev;
+                }
+                return [orderPayload, ...prev];
+              });
+              setRecommendation(null);
+            }
+          }
+        } catch (err) {
+          console.error("Failed to parse payload:", err);
+        }
+      };
     };
 
-    return () => ws.close();
+    connect();
+
+    return () => {
+      clearTimeout(reconnectTimeout);
+      if (ws) ws.close();
+    };
   }, []);
 
   return { isConnected, inventory, recommendation, confirmedOrders };

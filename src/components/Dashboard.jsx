@@ -1,17 +1,18 @@
-
 import { useSutraSocket } from '../hooks/useSutraSocket';
-import { Box, Zap, ShoppingCart, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Box, Zap, ShoppingCart, CheckCircle, AlertTriangle, Lock, Activity } from 'lucide-react';
 
 export default function Dashboard() {
   const { isConnected, inventory, recommendation, confirmedOrders } = useSutraSocket();
 
   return (
     <div className="min-h-screen bg-slate-50 p-8 font-sans">
-      {/* Top Navigation / Status Bar */}
       <div className="flex justify-between items-center mb-8">
         <div>
           <h1 className="text-3xl font-bold text-slate-900 tracking-tight">SUTRA Operations</h1>
-          <p className="text-slate-500 text-sm mt-1">Real-time hardware telemetry & AI procurement</p>
+          <div className="flex items-center gap-2 mt-1">
+            <Lock className="w-3.5 h-3.5 text-slate-400" />
+            <p className="text-slate-500 text-sm">Real-time hardware telemetry • End-to-End Encrypted</p>
+          </div>
         </div>
         <div className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold shadow-sm ${isConnected ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}`}>
           <div className={`w-2.5 h-2.5 rounded-full ${isConnected ? 'bg-emerald-500 animate-pulse' : 'bg-red-500'}`}></div>
@@ -20,8 +21,6 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        
-        {/* Left Column: Live Inventory */}
         <div className="xl:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
           <div className="flex items-center gap-2 mb-6 border-b border-slate-50 pb-4">
             <Box className="w-5 h-5 text-blue-600" />
@@ -32,13 +31,13 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {inventory.map((item, idx) => (
                 <div key={idx} className="p-4 rounded-xl border border-slate-100 bg-slate-50">
-                  <div className="text-sm font-semibold text-slate-500 uppercase tracking-wider">{item.item_name}</div>
+                  <div className="text-sm font-semibold text-slate-500 uppercase tracking-wider">{item?.item_name || 'Item'}</div>
                   <div className="mt-2 flex items-baseline gap-1">
-                    <span className="text-3xl font-black text-slate-900">{item.current_weight.toFixed(1)}</span>
-                    <span className="text-slate-500 font-medium">{item.unit}</span>
+                    <span className="text-3xl font-black text-slate-900">{item?.current_weight ? item.current_weight.toFixed(1) : '0.0'}</span>
+                    <span className="text-slate-500 font-medium">{item?.unit || 'kg'}</span>
                   </div>
                   <div className="mt-3 text-xs font-medium px-2 py-1 bg-white rounded text-slate-500 inline-block border border-slate-200">
-                    Threshold: {item.reorder_threshold}{item.unit}
+                    Threshold: {item?.reorder_threshold || 0}{item?.unit || 'kg'}
                   </div>
                 </div>
               ))}
@@ -51,10 +50,7 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* Right Column: AI Engine & Orders */}
         <div className="space-y-6">
-          
-          {/* AI Recommendation Panel */}
           <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-blue-500"></div>
             <div className="flex items-center gap-2 mb-6">
@@ -67,10 +63,27 @@ export default function Dashboard() {
                 <div className="bg-blue-50 rounded-xl p-4 mb-4 border border-blue-100">
                   <div className="flex justify-between items-start mb-2">
                     <span className="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded uppercase">Action Required</span>
-                    <span className="text-blue-700 font-bold text-sm">Confidence: {recommendation.confidence}%</span>
+                    <span className="text-blue-700 font-bold text-sm">Confidence: {recommendation.confidence || 95}%</span>
                   </div>
                   <p className="text-slate-800 font-medium">{recommendation.recommendation}</p>
                 </div>
+                
+                {recommendation.business_signals && recommendation.business_signals.length > 0 ? (
+                  <div className="bg-slate-50 rounded border border-slate-200 p-3 mb-4 space-y-2">
+                    {recommendation.business_signals.map((signal, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-xs text-slate-600 font-mono">
+                        <Activity className="w-3 h-3 text-blue-500"/> {signal}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="bg-slate-50 rounded border border-slate-200 p-3 mb-4">
+                    <div className="flex items-center gap-2 text-xs text-slate-600 font-mono italic">
+                      <Activity className="w-3 h-3 text-slate-400"/> Processing execution vectors...
+                    </div>
+                  </div>
+                )}
+
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between py-1 border-b border-slate-50">
                     <span className="text-slate-500">Trigger Event:</span>
@@ -85,9 +98,6 @@ export default function Dashboard() {
                     <span className="font-bold text-emerald-600">₹{recommendation.savings}</span>
                   </div>
                 </div>
-                <div className="mt-4 p-3 bg-slate-50 rounded text-sm text-slate-600 italic border-l-2 border-blue-300">
-                  " {recommendation.reasoning} "
-                </div>
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center py-8 text-slate-400">
@@ -100,7 +110,6 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* Activity Log */}
           <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
             <div className="flex items-center gap-2 mb-4">
               <ShoppingCart className="w-5 h-5 text-emerald-600" />
@@ -114,11 +123,17 @@ export default function Dashboard() {
                     <div className="flex items-center gap-3">
                       <CheckCircle className="w-4 h-4 text-emerald-500" />
                       <div>
-                        <div className="font-semibold text-slate-800 text-sm">{order.item} from {order.supplier}</div>
-                        <div className="text-xs text-slate-500 font-mono">{order.po_number}</div>
+                        <div className="font-semibold text-slate-800 text-sm">
+                          {order?.item || 'Unknown Item'} from {order?.supplier || 'Unknown Supplier'}
+                        </div>
+                        <div className="text-xs text-slate-500 font-mono">
+                          {order?.po_number || 'PENDING-ID'}
+                        </div>
                       </div>
                     </div>
-                    <div className="font-bold text-slate-700 text-sm">{order.quantity}kg</div>
+                    <div className="font-bold text-slate-700 text-sm">
+                      {order?.quantity || 0}kg
+                    </div>
                   </div>
                 ))
               ) : (
@@ -126,7 +141,6 @@ export default function Dashboard() {
               )}
             </div>
           </div>
-
         </div>
       </div>
     </div>

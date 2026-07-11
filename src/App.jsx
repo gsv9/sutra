@@ -3,7 +3,7 @@ import Dashboard from './components/Dashboard';
 import MobileApp from './components/MobileApp';
 import SupplierPortal from './components/SupplierPortal';
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
       <Routes>
@@ -14,5 +14,3 @@ function App() {
     </BrowserRouter>
   );
 }
-
-export default App;
