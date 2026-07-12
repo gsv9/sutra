@@ -70,7 +70,7 @@ Built for seamless multi-device deployment—from Arduino UNO Q powered smart sh
 ```text
 SUTRA/
 │
-├── arduino/
+├── HARDWARE/
 │   ├── arduino/
 │   └── python/
 │
