@@ -267,7 +267,7 @@ using Arduino IDE.
 python sutra.py
 ```
 ---
-##Additionally for Seperate Pipeline Checks
+Additionally for Seperate Pipeline Checks
 ---
 ## Run Edge Processing 
 ```bash
