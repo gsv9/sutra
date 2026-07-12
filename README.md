@@ -155,10 +155,6 @@ SUTRA/
 
 # 🧠 AI Pipeline
 
-<p align="center">
-  <img src="docs/ai_pipeline.png" width="100%">
-</p>
-
 ```text
 Inventory Event
         │
