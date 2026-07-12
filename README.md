@@ -243,6 +243,10 @@ Place the ONNX Runtime GenAI model inside
 ```text
 models/
 └── phi3-onnx/
+ //The model comes from Microsoft's ONNX Runtime GenAI repository:
+https://github.com/microsoft/onnxruntime-genai⁠�
+and specifically the Phi-3 model release:
+https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-onnx⁠�
 ```
 
 ---
@@ -260,7 +264,13 @@ using Arduino IDE.
 ---
 ## For Full Standalone demo 
 ```bash
-python serial_receiver.py
+python sutra.py
+```
+##Additionally for Seperate Pipeline Checks
+
+## Run Edge Inference 
+```bash
+python serial_receiver.py   // 
 ```
 ## Run Backend
 
