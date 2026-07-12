@@ -32,7 +32,7 @@ Built for seamless multi-device deployment—from Arduino UNO Q powered smart sh
 # 🏗 System Architecture
 
 <p align="center">
-  <img src="docs/architecture.png" width="100%">
+  <img src="docs/arch.png" width="100%">
 </p>
 
 ---
@@ -114,8 +114,8 @@ SUTRA/
 |------------|--------|
 | Red | E+ |
 | Black | E− |
-| White | A− |
-| Green | A+ |
+| White | A+ |
+| Green | A- |
 
 ---
 
