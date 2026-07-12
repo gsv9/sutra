@@ -252,13 +252,16 @@ models/
 Upload the firmware located in
 
 ```text
-arduino/firmware/
+HARDWARE/arduino
 ```
 
 using Arduino IDE.
 
 ---
-
+## For Full Standalone demo 
+```bash
+python serial_receiver.py
+```
 ## Run Backend
 
 ```bash
