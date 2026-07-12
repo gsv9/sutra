@@ -1,0 +1,24 @@
+[
+    {
+        "benchmark": "Cold Start",
+        "model": "Microsoft Phi-3 Mini 4K Instruct",
+        "execution_provider": "QNNExecutionProvider",
+        "load_time_ms": 0.0,
+        "inference_time_ms": 20754.66750000487,
+        "total_time_ms": 20754.66750000487,
+        "prompt_tokens": 0,
+        "output_tokens": 96,
+        "tokens_per_second": 4.625465572983883
+    },
+    {
+        "benchmark": "Warm Start",
+        "model": "Microsoft Phi-3 Mini 4K Instruct",
+        "execution_provider": "QNNExecutionProvider",
+        "load_time_ms": 0.0,
+        "inference_time_ms": 16625.366200001736,
+        "total_time_ms": 16625.366200001736,
+        "prompt_tokens": 0,
+        "output_tokens": 96,
+        "tokens_per_second": 5.774308899132097
+    }
+]

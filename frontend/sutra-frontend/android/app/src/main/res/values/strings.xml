@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">SUTRA Go</string>
+    <string name="title_activity_main">SUTRA Go</string>
+    <string name="package_name">com.sutra.mobile</string>
+    <string name="custom_url_scheme">com.sutra.mobile</string>
+</resources>

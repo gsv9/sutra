@@ -1,0 +1,3 @@
+benchmark,model,execution_provider,load_time_ms,inference_time_ms,total_time_ms,prompt_tokens,output_tokens,tokens_per_second
+Cold Start,Microsoft Phi-3 Mini 4K Instruct,QNNExecutionProvider,0.0,20754.66750000487,20754.66750000487,0,96,4.625465572983883
+Warm Start,Microsoft Phi-3 Mini 4K Instruct,QNNExecutionProvider,0.0,16625.366200001736,16625.366200001736,0,96,5.774308899132097

@@ -1,0 +1,47 @@
+{
+    "summary": {
+        "cold_recommendation_ms": 20455.72,
+        "recommendation": {
+            "runs": 5,
+            "mean_ms": 17752.13,
+            "median_ms": 16980.66,
+            "minimum_ms": 16430.19,
+            "maximum_ms": 19924.93,
+            "stddev_ms": 1542.25
+        },
+        "conversation": {
+            "runs": 6,
+            "mean_ms": 12503.03,
+            "median_ms": 11431.6,
+            "minimum_ms": 9375.76,
+            "maximum_ms": 17307.47,
+            "stddev_ms": 3306.25
+        }
+    },
+    "conversation": [
+        {
+            "question": "Why reorder now?",
+            "latency_ms": 9906.97
+        },
+        {
+            "question": "Why ABC Traders?",
+            "latency_ms": 10130.79
+        },
+        {
+            "question": "Compare suppliers.",
+            "latency_ms": 15564.8
+        },
+        {
+            "question": "Can I wait two days?",
+            "latency_ms": 9375.76
+        },
+        {
+            "question": "What if festival is cancelled?",
+            "latency_ms": 17307.47
+        },
+        {
+            "question": "How confident are you?",
+            "latency_ms": 12732.42
+        }
+    ]
+}

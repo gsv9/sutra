@@ -1,0 +1,13 @@
+Benchmark,Latency (ms)
+Cold Recommendation,20455.72
+Warm Recommendation 1,16430.19
+Warm Recommendation 2,16606.28
+Warm Recommendation 3,16980.66
+Warm Recommendation 4,18818.61
+Warm Recommendation 5,19924.93
+Why reorder now?,9906.97
+Why ABC Traders?,10130.79
+Compare suppliers.,15564.8
+Can I wait two days?,9375.76
+What if festival is cancelled?,17307.47
+How confident are you?,12732.42

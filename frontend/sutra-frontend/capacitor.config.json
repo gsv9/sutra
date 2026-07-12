@@ -1,0 +1,9 @@
+{
+  "appId": "com.sutra.mobile",
+  "appName": "SUTRA Go",
+  "webDir": "dist", 
+  "server": {
+    "url": "http://10.91.51.187:5173",
+    "cleartext": true
+  }
+}

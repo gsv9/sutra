@@ -1,0 +1,22 @@
+# Core AI
+torch>=2.4.0
+transformers>=4.45.0
+accelerate>=0.33.0
+huggingface-hub>=0.24.0
+safetensors>=0.4.5
+sentencepiece>=0.2.0
+
+# Validation
+pydantic>=2.8.0
+
+# API (backend integration)
+fastapi>=0.115.0
+uvicorn>=0.30.0
+
+# Utilities
+numpy>=1.26.0
+tqdm>=4.66.0
+
+# Optional Qualcomm runtime
+# qai-hub
+# qai-hub-models
