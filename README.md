@@ -268,7 +268,7 @@ python sutra.py
 ```
 ---
 ##Additionally for Seperate Pipeline Checks
-
+---
 ## Run Edge Processing 
 ```bash
 python serial_receiver.py   // 
