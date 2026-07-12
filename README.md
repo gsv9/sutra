@@ -12,7 +12,7 @@
 ![LLM](https://img.shields.io/badge/LLM-Microsoft_Phi--3-green?style=for-the-badge)
 ![Runtime](https://img.shields.io/badge/Runtime-ONNX_Runtime_GenAI-orange?style=for-the-badge)
 ![Acceleration](https://img.shields.io/badge/Acceleration-Qualcomm_QNN-red?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)
+
 
 
 <p align="center">
