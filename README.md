@@ -1,18 +1,24 @@
-![Platform](https://img.shields.io/badge/Platform-Snapdragon_X_Elite-blue)
-
-![Model](https://img.shields.io/badge/LLM-Microsoft_Phi--3-green)
-
-![Runtime](https://img.shields.io/badge/Runtime-ONNX_Runtime_GenAI-orange)
-
-![Accelerator](https://img.shields.io/badge/Acceleration-Qualcomm_QNN-red)
-
-![License](https://img.shields.io/badge/License-MIT-purple)
+<div align="center">
 
 # SUTRA
 
-## Smarter Unified Trade & Retail Assistant
+### **Smarter Unified Trade & Retail Assistant**
 
 ### *Where Edge AI Meets Explainable Retail Intelligence.*
+
+<br>
+
+![Platform](https://img.shields.io/badge/Platform-Snapdragon_X_Elite-blue?style=for-the-badge)
+![LLM](https://img.shields.io/badge/LLM-Microsoft_Phi--3-green?style=for-the-badge)
+![Runtime](https://img.shields.io/badge/Runtime-ONNX_Runtime_GenAI-orange?style=for-the-badge)
+![Acceleration](https://img.shields.io/badge/Acceleration-Qualcomm_QNN-red?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)
+
+<br><br>
+
+<img src="docs/hero.png" width="95%"/>
+
+</div>
 
 <p align="center">
   <img src="docs/hero.png" width="100%">
