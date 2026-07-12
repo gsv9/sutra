@@ -14,11 +14,6 @@
 ![Acceleration](https://img.shields.io/badge/Acceleration-Qualcomm_QNN-red?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)
 
-<br><br>
-
-<img src="docs/hero.png" width="95%"/>
-
-</div>
 
 <p align="center">
   <img src="docs/hero.png" width="100%">
