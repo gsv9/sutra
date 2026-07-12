@@ -71,8 +71,8 @@ Built for seamless multi-device deployment—from Arduino UNO Q powered smart sh
 SUTRA/
 │
 ├── arduino/
-│   ├── firmware/
-│   └── calibration/
+│   ├── arduino/
+│   └── python/
 │
 ├── backend/
 │
