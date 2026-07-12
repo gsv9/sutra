@@ -131,14 +131,14 @@ SUTRA/
 ---
 
 <p align="center">
-  <img src="docs/hard1.png" width="70%">
+  <img src="docs/hard1.jpeg" width="70%">
 </p>
 
 ---
 ---
 
 <p align="center">
-  <img src="docs/hard2.png" width="70%">
+  <img src="docs/hard2.jpeg" width="70%">
 </p>
 
 ---
