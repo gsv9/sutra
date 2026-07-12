@@ -1,3 +1,12 @@
+![Platform](https://img.shields.io/badge/Platform-Snapdragon_X_Elite-blue)
+
+![Model](https://img.shields.io/badge/LLM-Microsoft_Phi--3-green)
+
+![Runtime](https://img.shields.io/badge/Runtime-ONNX_Runtime_GenAI-orange)
+
+![Accelerator](https://img.shields.io/badge/Acceleration-Qualcomm_QNN-red)
+
+![License](https://img.shields.io/badge/License-MIT-purple)
 # ❓ How many businesses lose revenue—not because they lack customers, but because they don't know the right moment to restock, the right supplier to choose, or the right decision to make until it's already too late?
 
 # SUTRA
